@@ -1,0 +1,15 @@
+FROM ubuntu:latest
+
+# Instala as ferramentas de ataque e controle
+RUN apt-get update && apt-get install -y \
+    curl nmap docker.io kubectl python3 pip git nano \
+    && rm -rf /var/lib/apt/lists/*
+
+# Instala o scanner de Kubernetes
+RUN pip install kube-hunter --break-system-packages
+
+# Cria a pasta onde seus IPs e senhas ficarão salvos
+RUN mkdir /data
+
+# Comando para a "VPS" não desligar
+CMD ["tail", "-f", "/dev/null"
